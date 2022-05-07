@@ -1,7 +1,11 @@
 {
   "development": {
-    "storage": "./database.sqlite3",
-    "dialect": "sqlite"
+    "username": "root",
+    "password": "123456",
+    "database": "mall",
+    "host": "localhost",
+    "port": 3306,
+    "dialect": "mysql"
   },
   "test": {
     "dialect": "sqlite",

@@ -9,7 +9,6 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const user = req.body;
-  console.log({ user });
   await User.create(user);
   res.json(user);
 });
