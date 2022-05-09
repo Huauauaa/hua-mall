@@ -21,6 +21,7 @@ router.get('/', async (req, res) => {
     where,
     limit,
     offset,
+    order: [['updatedAt', 'DESC']],
   });
   res.json(result);
 });

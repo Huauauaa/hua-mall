@@ -3,6 +3,10 @@ module.exports = (sequelize, DataTypes) =>
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: {
+        arg: true,
+        msg: '此类别已经存在',
+      },
     },
     description: { type: DataTypes.STRING },
   });

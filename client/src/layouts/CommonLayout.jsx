@@ -15,6 +15,16 @@ function CommonLayout() {
     { label: '登录', key: '/login', disabled: authState.status },
     { label: '注册', key: '/register', disabled: authState.status },
     {
+      label: '商品管理',
+      key: '/product',
+      disabled: !(authState.status && authState.user?.username === 'admin'),
+    },
+    {
+      label: '商品类别管理',
+      key: '/category',
+      disabled: !(authState.status && authState.user?.username === 'admin'),
+    },
+    {
       label: authState.user?.username,
       children: [
         { label: '个人信息', key: '/profile' },

@@ -5,10 +5,12 @@ import AuthContext from './contexts/AuthContext';
 import CommonLayout from './layouts/CommonLayout';
 import RareLayout from './layouts/RareLayout';
 import CartPage from './pages/CartPage';
+import CategoryPage from './pages/category/CategoryPage';
 import HomePage from './pages/home/HomePage';
 import ProductDetail from './pages/home/ProductDetail';
 import LoginPage from './pages/LoginPage';
 import OrderPage from './pages/OrderPage';
+import ProductPage from './pages/product/ProductPage';
 import ProfilePage from './pages/ProfilePage';
 import RegisterPage from './pages/RegisterPage';
 import SettingPage from './pages/SettingPage';
@@ -53,6 +55,8 @@ function App() {
           <Route path="cart" element={<CartPage />} />
           <Route path="order" element={<OrderPage />} />
           <Route path="updatePassword" element={<UpdatePasswordPage />} />
+          <Route path="/product" element={<ProductPage />} />
+          <Route path="/category" element={<CategoryPage />} />
         </Route>
         <Route path="/" element={<RareLayout />}>
           <Route path="login" element={<LoginPage />} />

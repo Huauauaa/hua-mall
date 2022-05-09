@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) =>
         allowNull: false,
         unique: {
           arg: true,
-          msg: '不能重复',
+          msg: '此商品已经存在',
         },
         validate: {
           notNull: {

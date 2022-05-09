@@ -9,11 +9,9 @@ import { HashRouter as Router } from 'react-router-dom';
 import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <ConfigProvider locale={zhCN}>
-      <Router>
-        <App />
-      </Router>
-    </ConfigProvider>
-  </React.StrictMode>,
+  <ConfigProvider locale={zhCN}>
+    <Router>
+      <App />
+    </Router>
+  </ConfigProvider>,
 );
