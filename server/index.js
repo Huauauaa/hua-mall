@@ -6,14 +6,16 @@ app.use(express.json());
 
 const db = require('./models');
 
-const productRouter = require('./routers/products');
-const orderRouter = require('./routers/orders');
-const userRouter = require('./routers/users');
-const categoryRouter = require('./routers/category');
-app.use(`${PREFIX}/products`, productRouter);
-app.use(`${PREFIX}/orders`, orderRouter);
-app.use(`${PREFIX}/users`, userRouter);
-app.use(`${PREFIX}/categories`, categoryRouter);
+const routers = [
+  { path: '/products', file: require('./routers/products') },
+  { path: '/orders', file: require('./routers/orders') },
+  { path: '/auth', file: require('./routers/users') },
+  { path: '/categories', file: require('./routers/category') },
+];
+
+routers.forEach((item) => {
+  app.use(`${PREFIX}${item.path}`, item.file);
+});
 
 db.sequelize.sync().then(() => {
   app.listen(port, () => {

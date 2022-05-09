@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 const { Product: model } = require('../models');
 
 router.get('/', async (req, res) => {
-  const { name, pageSize = 5, page = 1, categoryId } = req.query;
+  const { name, pageSize = 5, page, categoryId } = req.query;
   const where = {};
   if (name) {
     where.name = { [Op.substring]: name };
@@ -12,10 +12,15 @@ router.get('/', async (req, res) => {
   if (categoryId) {
     where.categoryId = categoryId;
   }
+  let limit, offset;
+  if (Number(page) && Number(page) > 0) {
+    limit = +pageSize;
+    offset = (page - 1) * pageSize;
+  }
   const result = await model.findAndCountAll({
     where,
-    limit: +pageSize,
-    offset: (page - 1) * pageSize,
+    limit,
+    offset,
   });
   res.json(result);
 });
@@ -34,10 +39,10 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const result = await model.create(req.body);
-    res.json(result);
+    res.status(201).json(result);
   } catch (error) {
     console.error(error);
-    res.json(error.errors.map((item) => item.message).join(' '));
+    res.status(500).json(error.errors.map((item) => item.message).join(' '));
   }
 });
 
@@ -52,7 +57,7 @@ router.put('/:id', async (req, res) => {
     res.json(result);
   } catch (error) {
     console.error(error);
-    res.json(error.errors.map((item) => item.message).join(' '));
+    res.status(500).json(error.errors.map((item) => item.message).join(' '));
   }
 });
 
@@ -67,7 +72,7 @@ router.delete('/:id', async (req, res) => {
     res.json(result);
   } catch (error) {
     console.error(error);
-    res.json(error.errors.map((item) => item.message).join(' '));
+    res.status(500).json(error.errors.map((item) => item.message).join(' '));
   }
 });
 

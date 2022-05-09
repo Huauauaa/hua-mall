@@ -5,6 +5,19 @@ const instance = axios.create({
   timeout: 60e3,
 });
 
+instance.interceptors.request.use(
+  function (config) {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      config.headers.accessToken = accessToken;
+    }
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  },
+);
+
 instance.interceptors.response.use(
   (result) => {
     const { data } = result;

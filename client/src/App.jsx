@@ -1,4 +1,7 @@
+import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import authAPI from './apis/auth.api';
+import AuthContext from './contexts/AuthContext';
 import CommonLayout from './layouts/CommonLayout';
 import RareLayout from './layouts/RareLayout';
 import CartPage from './pages/CartPage';
@@ -9,10 +12,39 @@ import OrderPage from './pages/OrderPage';
 import ProfilePage from './pages/ProfilePage';
 import RegisterPage from './pages/RegisterPage';
 import SettingPage from './pages/SettingPage';
+import UpdatePasswordPage from './pages/UpdatePasswordPage';
 
 function App() {
+  const [authState, setAuthState] = useState({
+    status: Boolean(localStorage.getItem('accessToken')),
+    user: null,
+  });
+
+  const fetchCurrentUser = async () => {
+    try {
+      const response = await authAPI.getCurrentUser();
+      setAuthState({ status: true, user: response });
+    } catch (error) {
+      console.error(error);
+      setAuthState({ status: false, user: null });
+    }
+  };
+  const logout = () => {
+    localStorage.removeItem('accessToken');
+    setAuthState({ status: false, user: null });
+  };
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      fetchCurrentUser();
+    });
+    return () => {
+      clearTimeout(id);
+    };
+  }, []);
+
   return (
-    <div className="App">
+    <AuthContext.Provider value={{ authState, fetchCurrentUser, logout }}>
       <Routes>
         <Route path="/" element={<CommonLayout />}>
           <Route index element={<HomePage />} />
@@ -20,6 +52,7 @@ function App() {
           <Route path="profile" element={<ProfilePage />} />
           <Route path="cart" element={<CartPage />} />
           <Route path="order" element={<OrderPage />} />
+          <Route path="updatePassword" element={<UpdatePasswordPage />} />
         </Route>
         <Route path="/" element={<RareLayout />}>
           <Route path="login" element={<LoginPage />} />
@@ -29,7 +62,7 @@ function App() {
 
         <Route path="*" element={<p>404</p>} />
       </Routes>
-    </div>
+    </AuthContext.Provider>
   );
 }
 
