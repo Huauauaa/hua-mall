@@ -11,6 +11,7 @@ const routers = [
   { path: '/orders', file: require('./routers/orders') },
   { path: '/auth', file: require('./routers/users') },
   { path: '/categories', file: require('./routers/category') },
+  { path: '/cart', file: require('./routers/cart') },
 ];
 
 routers.forEach((item) => {

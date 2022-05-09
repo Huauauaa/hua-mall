@@ -25,10 +25,10 @@ function LoginPage() {
     <Wrapper>
       <Form layout="vertical" onFinish={onLogin}>
         <Form.Item label="用户名" name="username" rules={[{ required: true }]}>
-          <Input autoComplete="username" />
+          <Input autoComplete="new-password" allowClear />
         </Form.Item>
         <Form.Item label="密码" name="password" rules={[{ required: true }]}>
-          <Input.Password autoComplete="new-password" />
+          <Input.Password autoComplete="new-password" allowClear />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
@@ -37,7 +37,6 @@ function LoginPage() {
         </Form.Item>
         <Form.Item>
           <div className="actions">
-            <a>忘记密码</a>
             <a
               onClick={() => {
                 navigate('/register');

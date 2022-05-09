@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  const model = sequelize.define('User', {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -19,5 +19,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
     },
   });
-  return User;
+
+  model.associate = (models) => {
+    model.belongsToMany(models.Product, {
+      through: models.Cart,
+    });
+  };
+
+  return model;
 };

@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) =>
-  sequelize.define(
+module.exports = (sequelize, DataTypes) => {
+  const model = sequelize.define(
     'Product',
     {
       name: {
@@ -36,5 +36,14 @@ module.exports = (sequelize, DataTypes) =>
         type: DataTypes.INTEGER,
       },
     },
-    { paranoid: true },
+    { paranoid: true }
   );
+
+  model.associate = (models) => {
+    model.belongsToMany(models.User, {
+      through: models.Cart,
+    });
+  };
+
+  return model;
+};

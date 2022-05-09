@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Table, Cascader } from 'antd';
+import { Input, Table, Cascader, Space, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import productAPI from '../../apis/product.api';
 import categoryAPI from '../../apis/category.api';
 import StyledHomePage from './HomePage.styled';
+import cartAPI from '../../apis/cart.api';
 
 const { Search } = Input;
 
@@ -57,6 +58,15 @@ function HomePage() {
     navigate(`/product/${id}`);
   };
 
+  const addToCart = async (id) => {
+    try {
+      await cartAPI.add({ productId: id });
+      message.success('添加成功');
+    } catch (error) {
+      console.error(error || '操作失败');
+    }
+  };
+
   const columns = [
     {
       title: '名称',
@@ -65,6 +75,14 @@ function HomePage() {
     {
       title: '价格',
       render: ({ price, moneyUnit, unit }) => `${price}${moneyUnit}/${unit}`,
+    },
+    {
+      title: '操作',
+      render: ({ id }) => (
+        <Space>
+          <a onClick={() => addToCart(id)}>加入购物车</a>
+        </Space>
+      ),
     },
   ];
 

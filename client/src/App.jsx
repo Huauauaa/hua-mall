@@ -25,6 +25,9 @@ function App() {
   const fetchCurrentUser = async () => {
     try {
       const response = await authAPI.getCurrentUser();
+      if (!response) {
+        throw new Error(response);
+      }
       setAuthState({ status: true, user: response });
     } catch (error) {
       console.error(error);
