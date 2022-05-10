@@ -15,12 +15,12 @@
 ## Features
 
 - user
-  - [x] login/logout/profile/update password
-  - [ ] user management
+  - [x] login/logout
+  - [x] user management
 - product
   - [x] CRUD
 - order
-  - [ ] CRUD
+  - [x] CRUD
   - [ ] pay
 - category
   - [x] add/edit/delete
@@ -38,17 +38,22 @@ hua-mall
 
 ## Technology
 
+### Env
+
+| Name                                        | Description |
+| ------------------------------------------- | ----------- |
+| [MySQL](https://www.mysql.com/)             |             |
+| [SQLite](https://www.sqlite.org/index.html) |             |
+| [Node.js](https://nodejs.org/en/)           |             |
+
 ### backend
 
-| Name                                        | Description               |
-| ------------------------------------------- | ------------------------- |
-| [Node.js](https://nodejs.org/en/)           |                           |
-| [Express](http://expressjs.com/)            | web framework for Node.js |
-| [Sequelize](https://sequelize.org/)         | ORM                       |
-| [MySQL](https://www.mysql.com/)             | Database                  |
-| [SQLite](https://www.sqlite.org/index.html) | Database                  |
+| Name                                | Description               |
+| ----------------------------------- | ------------------------- |
+| [Express](http://expressjs.com/)    | web framework for Node.js |
+| [Sequelize](https://sequelize.org/) | ORM                       |
 
-### frontend
+### web
 
 | Name                                                | Description |
 | --------------------------------------------------- | ----------- |
@@ -57,3 +62,9 @@ hua-mall
 | [Ant Design](https://ant.design/)                   | UI lib      |
 | [styled-components](https://styled-components.com/) | style       |
 | [axios](https://axios-http.com/)                    |             |
+
+### app
+
+| Name                                 | Description |
+| ------------------------------------ | ----------- |
+| [uni-app](https://uniapp.dcloud.io/) |             |

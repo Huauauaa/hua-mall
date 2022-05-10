@@ -2,3 +2,6 @@
 server/database.sqlite3
 client/node_modules
 .idea
+app/node_modules
+app/dist
+app/.hbuilderx
