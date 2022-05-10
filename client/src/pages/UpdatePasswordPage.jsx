@@ -1,9 +1,10 @@
-import { useContext } from 'react';
 import { Button, Form, Input, message } from 'antd';
-import { useNavigate } from 'react-router-dom';
+
 import AuthContext from '../contexts/AuthContext';
-import authAPI from '../apis/auth.api';
 import StyledUpdatePasswordPage from './UpdatePasswordPage.styled';
+import authAPI from '../apis/auth.api';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function UpdatePasswordPage() {
   const { authState, logout } = useContext(AuthContext);
@@ -22,7 +23,7 @@ function UpdatePasswordPage() {
     <StyledUpdatePasswordPage>
       <Form labelCol={{ span: 10 }} onFinish={onUpdatePassword}>
         <Form.Item label="原密码" name="password" rules={[{ required: true }]}>
-          <Input.Password autoComplete="new-password" allowClear />
+          <Input.Password allowClear />
         </Form.Item>
         <Form.Item
           label="新密码"
@@ -38,7 +39,7 @@ function UpdatePasswordPage() {
             }),
           ]}
         >
-          <Input.Password autoComplete="new-password" allowClear />
+          <Input.Password allowClear />
         </Form.Item>
         <Form.Item
           label="再次输入新密码"
@@ -55,7 +56,7 @@ function UpdatePasswordPage() {
             }),
           ]}
         >
-          <Input.Password autoComplete="new-password" allowClear />
+          <Input.Password allowClear />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" style={{ width: '100%' }}>

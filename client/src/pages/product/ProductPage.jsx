@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Input, Table, Button, Cascader, message, Space, Modal } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import productAPI from '../../apis/product.api';
-import categoryAPI from '../../apis/category.api';
+import { Button, Cascader, Input, Modal, Space, Table, message } from 'antd';
+import React, { useEffect, useState } from 'react';
+
 import ProductFormDialog from './ProductFormDialog';
+import categoryAPI from '../../apis/category.api';
+import productAPI from '../../apis/product.api';
+import { useNavigate } from 'react-router-dom';
 
 const { Search } = Input;
 
@@ -74,13 +75,29 @@ function ProductPage() {
   };
 
   const openFormDialog = (val = {}) => {
-    setFormDialog({ visible: true, initialValues: val });
+    setFormDialog({
+      visible: true,
+      initialValues: {
+        ...val,
+        categoryIds: val.Categories?.map((item) => item.id) || [],
+      },
+    });
   };
 
   const columns = [
     {
+      title: 'ID',
+      dataIndex: 'id',
+      fixed: true,
+    },
+    {
       title: '名称',
       dataIndex: 'name',
+    },
+    {
+      title: '类别',
+      render: ({ Categories }) =>
+        Categories?.map((item) => item.name).join(' '),
     },
     {
       title: '操作',

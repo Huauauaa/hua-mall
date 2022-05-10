@@ -1,8 +1,26 @@
-import { Form, Modal, Input } from 'antd';
-import React from 'react';
+import { Form, Input, Modal, TreeSelect } from 'antd';
+import React, { useEffect, useState } from 'react';
+
+import categoryAPI from '../../apis/category.api';
 
 function ProductFormDialog({ onClose, onSave, initialValues }) {
   const [formInstance] = Form.useForm();
+  const [category, setCategory] = useState([]);
+
+  const fetchCategory = async () => {
+    try {
+      const response = await categoryAPI.getAll();
+      setCategory(
+        response.map((item) => ({ value: item.id, label: item.name })),
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
   const onOk = async () => {
     const isValid = await formInstance.validateFields();
     if (!isValid) {
@@ -18,10 +36,19 @@ function ProductFormDialog({ onClose, onSave, initialValues }) {
       closable={false}
       onOk={onOk}
     >
-      <Form form={formInstance} initialValues={initialValues}>
+      <Form
+        form={formInstance}
+        initialValues={initialValues}
+        labelCol={{ span: 3 }}
+      >
         <Form.Item label="名称" name="name" rules={[{ required: true }]}>
           <Input allowClear />
         </Form.Item>
+        {category.length > 0 && (
+          <Form.Item label="类别" name="categoryIds">
+            <TreeSelect treeData={category} treeCheckable />
+          </Form.Item>
+        )}
       </Form>
     </Modal>
   );

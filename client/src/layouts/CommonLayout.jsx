@@ -1,8 +1,9 @@
+import { Dropdown, Layout, Menu, Space } from 'antd';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import React, { useContext } from 'react';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { StyledCommonHeader } from './Header.styled';
+
 import AuthContext from '../contexts/AuthContext';
+import { StyledCommonHeader } from './Header.styled';
 
 const { Header, Content, Footer } = Layout;
 
@@ -24,17 +25,6 @@ function CommonLayout() {
       key: '/category',
       disabled: !(authState.status && authState.user?.username === 'admin'),
     },
-    {
-      label: authState.user?.username,
-      children: [
-        { label: '个人信息', key: '/profile' },
-        { label: '购物车', key: '/cart' },
-        { label: '订单', key: '/order' },
-        { label: '修改密码', key: '/updatePassword' },
-        { label: '登出', key: 'logout' },
-      ],
-      disabled: !authState.status,
-    },
   ];
 
   const onMenuClick = ({ item, key, keyPath, domEvent }) => {
@@ -47,6 +37,21 @@ function CommonLayout() {
     }
     navigate(key);
   };
+
+  const profileMenu = (
+    <Menu
+      theme="light"
+      items={[
+        { label: '个人信息', key: '/profile' },
+        { label: '购物车', key: '/cart' },
+        { label: '订单', key: '/order' },
+        { label: '修改密码', key: '/updatePassword' },
+        { label: '登出', key: 'logout' },
+      ]}
+      onClick={onMenuClick}
+    />
+  );
+
   return (
     <Layout>
       <StyledCommonHeader>
@@ -57,6 +62,15 @@ function CommonLayout() {
           selectedKeys={[location.pathname]}
           onClick={onMenuClick}
         />
+        {authState.status && (
+          <Dropdown
+            overlay={profileMenu}
+            className="profile"
+            trigger={['click']}
+          >
+            <Space>{authState.user?.username}</Space>
+          </Dropdown>
+        )}
       </StyledCommonHeader>
       <Content>
         <Outlet />

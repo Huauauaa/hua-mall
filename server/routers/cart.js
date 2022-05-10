@@ -30,6 +30,9 @@ router.put('/', validateToken, async (req, res) => {
 router.get('/', validateToken, async (req, res) => {
   const userId = req.user.id;
   const user = await User.findByPk(userId);
+  if (!user) {
+    return res.status(401).json({ error: '请先登录' });
+  }
   const result = await user.getProducts();
   res.json(result);
 });

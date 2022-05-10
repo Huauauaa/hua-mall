@@ -1,9 +1,10 @@
+import { Button, Form, Input, message } from 'antd';
 import React, { useContext } from 'react';
-import { Form, Input, Button, message } from 'antd';
-import { useNavigate } from 'react-router-dom';
+
+import AuthContext from '../contexts/AuthContext';
 import { Wrapper } from './AuthPage.styled';
 import authAPI from '../apis/auth.api';
-import AuthContext from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
   const { fetchCurrentUser } = useContext(AuthContext);
@@ -25,10 +26,10 @@ function LoginPage() {
     <Wrapper>
       <Form layout="vertical" onFinish={onLogin}>
         <Form.Item label="用户名" name="username" rules={[{ required: true }]}>
-          <Input autoComplete="new-password" allowClear />
+          <Input  allowClear />
         </Form.Item>
         <Form.Item label="密码" name="password" rules={[{ required: true }]}>
-          <Input.Password autoComplete="new-password" allowClear />
+          <Input.Password allowClear />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">

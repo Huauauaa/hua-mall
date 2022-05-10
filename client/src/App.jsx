@@ -1,20 +1,22 @@
-import { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import authAPI from './apis/auth.api';
+import { Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
 import AuthContext from './contexts/AuthContext';
-import CommonLayout from './layouts/CommonLayout';
-import RareLayout from './layouts/RareLayout';
 import CartPage from './pages/CartPage';
 import CategoryPage from './pages/category/CategoryPage';
+import CommonLayout from './layouts/CommonLayout';
 import HomePage from './pages/home/HomePage';
-import ProductDetail from './pages/home/ProductDetail';
 import LoginPage from './pages/LoginPage';
 import OrderPage from './pages/OrderPage';
+import ProductDetail from './pages/home/ProductDetail';
 import ProductPage from './pages/product/ProductPage';
 import ProfilePage from './pages/ProfilePage';
+import RareLayout from './layouts/RareLayout';
 import RegisterPage from './pages/RegisterPage';
+import RequireAuth from './layouts/RequireAuth';
 import SettingPage from './pages/SettingPage';
 import UpdatePasswordPage from './pages/UpdatePasswordPage';
+import authAPI from './apis/auth.api';
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -58,7 +60,14 @@ function App() {
           <Route path="cart" element={<CartPage />} />
           <Route path="order" element={<OrderPage />} />
           <Route path="updatePassword" element={<UpdatePasswordPage />} />
-          <Route path="/product" element={<ProductPage />} />
+          <Route
+            path="/product"
+            element={
+              <RequireAuth>
+                <ProductPage />
+              </RequireAuth>
+            }
+          />
           <Route path="/category" element={<CategoryPage />} />
         </Route>
         <Route path="/" element={<RareLayout />}>

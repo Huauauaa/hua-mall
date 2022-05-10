@@ -9,11 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "antd": "^4.20.2",
     "axios": "^0.27.2",
     "less": "^4.1.2",
+    "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^6.3.0",
     "styled-components": "^5.3.5"
   },

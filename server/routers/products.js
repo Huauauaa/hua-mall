@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Op } = require('sequelize');
-const { Product: model } = require('../models');
+const { Product: model, Category, ProductCategory } = require('../models');
 
 router.get('/', async (req, res) => {
   const { name, pageSize = 5, page, categoryId } = req.query;
@@ -22,6 +22,7 @@ router.get('/', async (req, res) => {
     limit,
     offset,
     order: [['updatedAt', 'DESC']],
+    include: Category,
   });
   res.json(result);
 });
@@ -40,6 +41,11 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const result = await model.create(req.body);
+    const { categoryIds } = req.body;
+    const categories = await Category.findAll({
+      where: { id: { [Op.in]: categoryIds } },
+    });
+    await result.setCategories(categories || []);
     res.status(201).json(result);
   } catch (error) {
     console.error(error);
@@ -50,11 +56,14 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await model.update(req.body, {
-      where: {
-        id,
-      },
+    const { categoryIds, name } = req.body;
+    const result = await model.findByPk(id);
+    result.name = name;
+    await result.save();
+    const categories = await Category.findAll({
+      where: { id: { [Op.in]: categoryIds } },
     });
+    await result.setCategories(categories || []);
     res.json(result);
   } catch (error) {
     console.error(error);
@@ -65,11 +74,9 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await model.destroy({
-      where: {
-        id,
-      },
-    });
+    const result = await model.findByPk(id);
+    result.setCategories([]);
+    await result.destroy();
     res.json(result);
   } catch (error) {
     console.error(error);

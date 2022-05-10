@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) =>
-  sequelize.define('Category', {
+module.exports = (sequelize, DataTypes) => {
+  const model = sequelize.define('Category', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -10,3 +10,13 @@ module.exports = (sequelize, DataTypes) =>
     },
     description: { type: DataTypes.STRING },
   });
+
+  model.associate = (models) => {
+    model.belongsToMany(models.Product, {
+      through: models.ProductCategory,
+      onDelete: 'CASCADE',
+    });
+  };
+
+  return model;
+};

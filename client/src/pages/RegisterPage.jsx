@@ -1,8 +1,9 @@
+import { Button, Form, Input, Switch, message } from 'antd';
+
 import React from 'react';
-import { Form, Input, Button, message, Switch } from 'antd';
-import { useNavigate } from 'react-router-dom';
 import { Wrapper } from './AuthPage.styled';
 import authAPI from '../apis/auth.api';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -21,10 +22,10 @@ function RegisterPage() {
     <Wrapper>
       <Form layout="vertical" onFinish={onRegister}>
         <Form.Item label="用户名" name="username" rules={[{ required: true }]}>
-          <Input autoComplete="username" allowClear />
+          <Input allowClear />
         </Form.Item>
         <Form.Item label="密码" name="password" rules={[{ required: true }]}>
-          <Input.Password autoComplete="new-password" allowClear />
+          <Input.Password allowClear />
         </Form.Item>
         <Form.Item label="性别" name="gender" valuePropName="checked">
           <Switch checkedChildren="男" unCheckedChildren="女" />
@@ -39,13 +40,16 @@ function RegisterPage() {
         </Form.Item>
         <Form.Item>
           <div className="actions">
-            <a
-              onClick={() => {
-                navigate('/login');
-              }}
-            >
-              登录
-            </a>
+            <div>
+              已有账号,去
+              <a
+                onClick={() => {
+                  navigate('/login');
+                }}
+              >
+                登录
+              </a>
+            </div>
           </div>
         </Form.Item>
       </Form>
