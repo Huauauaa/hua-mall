@@ -1,7 +1,8 @@
+import { Button, Modal, Space, Tree, message } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { Tree, Button, message, Space, Modal } from 'antd';
-import categoryAPI from '../../apis/category.api';
+
 import CategoryFormDialog from './CategoryFormDialog';
+import categoryAPI from '../../apis/category.api';
 
 function CategoryPage() {
   const [treeData, setTreeData] = useState([]);
@@ -82,9 +83,11 @@ function CategoryPage() {
           return (
             <div>
               <Space>
-                {title}
+                <span>{title}</span>
                 <a onClick={() => openFormDialog(nodeData)}>编辑</a>
-                <a onClick={() => onDelete(id)}>删除</a>
+                <Button danger type="link" onClick={() => onDelete(id)}>
+                  删除
+                </Button>
               </Space>
             </div>
           );

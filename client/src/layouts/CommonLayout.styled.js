@@ -1,11 +1,12 @@
 import { Layout } from 'antd';
 import styled from 'styled-components';
-
+const { Header, Content } = Layout;
 const profileWidth = '100px';
-export const StyledCommonHeader = styled(Layout.Header)`
+export const StyledCommonHeader = styled(Header)`
   padding: 0 10px;
   display: flex;
   background-color: #fff;
+  height: ${({ theme }) => theme.headerHight};
 
   .profile {
     margin-left: auto;
@@ -25,4 +26,17 @@ export const StyledCommonHeader = styled(Layout.Header)`
   .ant-menu-item-disabled {
     display: none;
   }
+`;
+
+export const StyledCommonContent = styled(Content)`
+  height: calc(100% - ${({ theme }) => theme.headerHight});
+  padding: 10px;
+  .ant-table,
+  .ant-tree {
+    margin-top: 10px;
+  }
+`;
+
+export const StyledCommonLayout = styled(Layout)`
+  height: 100%;
 `;

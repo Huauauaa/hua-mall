@@ -26,7 +26,7 @@ instance.interceptors.response.use(
   (data) => {
     const { response } = data;
     console.error(response);
-    return Promise.reject(response.data);
+    return Promise.reject({ ...response.data, status: response.status });
   },
 );
 

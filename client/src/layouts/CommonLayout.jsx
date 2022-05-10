@@ -1,11 +1,13 @@
-import { Dropdown, Layout, Menu, Space } from 'antd';
+import { Dropdown, Menu, Space } from 'antd';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import React, { useContext } from 'react';
+import {
+  StyledCommonContent,
+  StyledCommonHeader,
+  StyledCommonLayout,
+} from './CommonLayout.styled';
 
 import AuthContext from '../contexts/AuthContext';
-import { StyledCommonHeader } from './Header.styled';
-
-const { Header, Content, Footer } = Layout;
 
 function CommonLayout() {
   const { authState, logout } = useContext(AuthContext);
@@ -23,6 +25,11 @@ function CommonLayout() {
     {
       label: '商品类别管理',
       key: '/category',
+      disabled: !(authState.status && authState.user?.username === 'admin'),
+    },
+    {
+      label: '用户管理',
+      key: '/user',
       disabled: !(authState.status && authState.user?.username === 'admin'),
     },
   ];
@@ -53,7 +60,7 @@ function CommonLayout() {
   );
 
   return (
-    <Layout>
+    <StyledCommonLayout>
       <StyledCommonHeader>
         <Menu
           items={items}
@@ -72,10 +79,10 @@ function CommonLayout() {
           </Dropdown>
         )}
       </StyledCommonHeader>
-      <Content>
+      <StyledCommonContent>
         <Outlet />
-      </Content>
-    </Layout>
+      </StyledCommonContent>
+    </StyledCommonLayout>
   );
 }
 

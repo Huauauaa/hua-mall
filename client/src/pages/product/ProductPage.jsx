@@ -88,25 +88,33 @@ function ProductPage() {
       title: 'ID',
       dataIndex: 'id',
       fixed: true,
+      width: 50,
     },
     {
       title: '名称',
       dataIndex: 'name',
+      width: 100,
     },
     {
       title: '价格',
+      width: 50,
       render: ({ price, moneyUnit, unit }) => `${price}${moneyUnit}/${unit}`,
     },
     {
       title: '类别',
+      width: 100,
       render: ({ Categories }) =>
         Categories?.map((item) => item.name).join(' '),
     },
     {
       title: '操作',
+      fixed: 'right',
+      width: 100,
       render: (row) => (
-        <Space size="middle">
-          <a onClick={onDelete(row.id)}>删除</a>
+        <Space>
+          <Button danger type="link" onClick={() => onDelete(row.id)}>
+            删除
+          </Button>
           <a onClick={() => openFormDialog(row)}>修改</a>
         </Space>
       ),
@@ -116,11 +124,10 @@ function ProductPage() {
   const onSearch = (name) => {
     fetchData({ name, page: 1 });
   };
-  const onChange = (pagination, filters, sorter, extra) => {
+  const onTableChange = (pagination, filters, sorter, extra) => {
     if (extra.action === 'paginate') {
       fetchData({
         page: pagination.current,
-        pageSize: pagination.pageSize,
       });
     }
   };
@@ -151,27 +158,27 @@ function ProductPage() {
   };
   return (
     <div>
-      <div>
+      <Space>
         <Button type="primary" onClick={() => openFormDialog()}>
           添加商品
         </Button>
-      </div>
-      <Search
-        addonBefore={
-          <Cascader
-            placeholder="全部种类"
-            style={{ width: 150 }}
-            options={category}
-            onChange={onCategoryChange}
-          />
-        }
-        placeholder="按名称搜索"
-        enterButton
-        className="search-area"
-        onSearch={onSearch}
-      />
+        <Search
+          addonBefore={
+            <Cascader
+              placeholder="全部种类"
+              style={{ width: 150 }}
+              options={category}
+              onChange={onCategoryChange}
+            />
+          }
+          placeholder="按名称搜索"
+          enterButton
+          className="search-area"
+          onSearch={onSearch}
+        />
+      </Space>
       <Table
-        onChange={onChange}
+        onChange={onTableChange}
         loading={loading}
         dataSource={tableData}
         rowKey="id"
@@ -183,6 +190,7 @@ function ProductPage() {
           current: pager.page,
           showTotal: (total) => `共${total}条`,
         }}
+        scroll={{ x: 1000 }}
       />
       {formDialog.visible && (
         <ProductFormDialog

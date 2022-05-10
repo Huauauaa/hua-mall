@@ -16,6 +16,7 @@ import RegisterPage from './pages/RegisterPage';
 import RequireAuth from './layouts/RequireAuth';
 import SettingPage from './pages/SettingPage';
 import UpdatePasswordPage from './pages/UpdatePasswordPage';
+import UserPage from './pages/user/UserPage';
 import authAPI from './apis/auth.api';
 
 function App() {
@@ -73,6 +74,14 @@ function App() {
             element={
               <RequireAuth>
                 <CategoryPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/user"
+            element={
+              <RequireAuth>
+                <UserPage />
               </RequireAuth>
             }
           />

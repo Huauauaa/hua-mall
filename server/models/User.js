@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     balance: {
       type: DataTypes.DECIMAL(10, 2),
-      defaultValue: 100,
+      defaultValue: 0,
     },
   });
 

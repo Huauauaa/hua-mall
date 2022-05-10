@@ -77,27 +77,11 @@ function HomePage() {
       message.success('添加成功');
     } catch (error) {
       console.error(error || '操作失败');
+      if (error.status === 401) {
+        navigate('/login');
+      }
     }
   };
-
-  const columns = [
-    {
-      title: '名称',
-      render: ({ name, id }) => <a onClick={goDetailPage(id)}>{name}</a>,
-    },
-    {
-      title: '价格',
-      render: ({ price, moneyUnit, unit }) => `${price}${moneyUnit}/${unit}`,
-    },
-    {
-      title: '操作',
-      render: ({ id }) => (
-        <Space>
-          <a onClick={() => addToCart(id)}>加入购物车</a>
-        </Space>
-      ),
-    },
-  ];
 
   const onSearch = (name) => {
     fetchProduct({ name, page: 1 });

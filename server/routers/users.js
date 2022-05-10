@@ -60,11 +60,30 @@ router.post('/login', async (req, res) => {
 router.put('/users/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await model.update(req.body, {
-      where: {
-        id,
+    const { password, ...other } = req.body;
+    let hashPassword = null;
+    if (password) {
+      hashPassword = await bcrypt.hash(password, 10);
+    }
+    const result = await model.update(
+      { ...other, password: hashPassword },
+      {
+        where: {
+          id,
+        },
       },
-    });
+    );
+    res.json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error.errors.map((item) => item.message).join(' '));
+  }
+});
+router.post('/users', async (req, res) => {
+  try {
+    const { password, ...other } = req.body;
+    const hashPassword = await bcrypt.hash(password, 10);
+    const result = await model.create({ ...other, password: hashPassword });
     res.json(result);
   } catch (error) {
     console.error(error);

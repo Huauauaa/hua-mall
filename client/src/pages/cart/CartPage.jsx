@@ -89,7 +89,9 @@ function CartPage() {
       title: '操作',
       render: ({ id }) => (
         <Space>
-          <a onClick={() => onDelete(id)}>删除</a>
+          <Button danger type="link" onClick={() => onDelete(id)}>
+            删除
+          </Button>
         </Space>
       ),
     },
