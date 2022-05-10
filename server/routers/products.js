@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Op } = require('sequelize');
-const { Product: model, Category, ProductCategory } = require('../models');
+const { Product: model, Category } = require('../models');
 
 router.get('/', async (req, res) => {
   const { name, pageSize = 5, page, categoryId } = req.query;
@@ -56,9 +56,10 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { categoryIds, name } = req.body;
+    const { categoryIds, name, price } = req.body;
     const result = await model.findByPk(id);
     result.name = name;
+    result.price = price;
     await result.save();
     const categories = await Category.findAll({
       where: { id: { [Op.in]: categoryIds } },

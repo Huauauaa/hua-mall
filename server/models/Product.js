@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
     model.belongsToMany(models.Category, {
       through: models.ProductCategory,
     });
+
+    model.belongsToMany(models.Order, {
+      through: models.ProductOrder,
+    });
   };
 
   return model;

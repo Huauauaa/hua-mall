@@ -20,6 +20,6 @@ routers.forEach((item) => {
 
 db.sequelize.sync().then(() => {
   app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    console.info(`Example app listening on port ${port}`);
   });
 });

@@ -18,12 +18,18 @@ module.exports = (sequelize, DataTypes) => {
     gender: {
       type: DataTypes.BOOLEAN,
     },
+    balance: {
+      type: DataTypes.DECIMAL(10, 2),
+      defaultValue: 100,
+    },
   });
 
   model.associate = (models) => {
     model.belongsToMany(models.Product, {
       through: models.Cart,
     });
+
+    model.hasMany(models.Order);
   };
 
   return model;

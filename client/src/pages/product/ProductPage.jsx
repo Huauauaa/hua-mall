@@ -22,7 +22,6 @@ function ProductPage() {
       setLoading(true);
       const params = { ...search, ...pager, ...condition };
       const response = await productAPI.getAll(params);
-      console.log({ response });
       setSearch(params);
       const { rows, count } = response;
       setTableData(rows);
@@ -93,6 +92,10 @@ function ProductPage() {
     {
       title: '名称',
       dataIndex: 'name',
+    },
+    {
+      title: '价格',
+      render: ({ price, moneyUnit, unit }) => `${price}${moneyUnit}/${unit}`,
     },
     {
       title: '类别',

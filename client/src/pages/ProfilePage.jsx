@@ -1,9 +1,11 @@
-import { useState } from 'react';
 import { Button, Form, Input, Switch, message } from 'antd';
 import React, { useContext } from 'react';
+
 import AuthContext from '../contexts/AuthContext';
-import authAPI from '../apis/auth.api';
 import StyledProfilePage from './ProfilePage.styled';
+import authAPI from '../apis/auth.api';
+import { formatMoney } from '../utils';
+import { useState } from 'react';
 
 function ProfilePage() {
   const { authState, fetchCurrentUser } = useContext(AuthContext);
@@ -40,6 +42,9 @@ function ProfilePage() {
           </Form.Item>
           <Form.Item label="电话" name="phone">
             <Input />
+          </Form.Item>
+          <Form.Item label="余额">
+            {formatMoney(authState.user.balance)}元
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" style={{ width: '100%' }}>

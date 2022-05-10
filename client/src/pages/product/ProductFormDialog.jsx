@@ -44,6 +44,9 @@ function ProductFormDialog({ onClose, onSave, initialValues }) {
         <Form.Item label="名称" name="name" rules={[{ required: true }]}>
           <Input allowClear />
         </Form.Item>
+        <Form.Item label="价格" name="price" rules={[{ required: true }]}>
+          <Input allowClear suffix="元" />
+        </Form.Item>
         {category.length > 0 && (
           <Form.Item label="类别" name="categoryIds">
             <TreeSelect treeData={category} treeCheckable />

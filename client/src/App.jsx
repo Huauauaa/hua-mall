@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import AuthContext from './contexts/AuthContext';
-import CartPage from './pages/CartPage';
+import CartPage from './pages/cart/CartPage';
 import CategoryPage from './pages/category/CategoryPage';
 import CommonLayout from './layouts/CommonLayout';
 import HomePage from './pages/home/HomePage';
@@ -68,7 +68,14 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route path="/category" element={<CategoryPage />} />
+          <Route
+            path="/category"
+            element={
+              <RequireAuth>
+                <CategoryPage />
+              </RequireAuth>
+            }
+          />
         </Route>
         <Route path="/" element={<RareLayout />}>
           <Route path="login" element={<LoginPage />} />
