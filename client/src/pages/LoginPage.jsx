@@ -16,7 +16,7 @@ function LoginPage() {
       message.success('登录成功');
       localStorage.setItem('accessToken', response);
       navigate('/');
-      fetchCurrentUser();
+      fetchCurrentUser(false);
     } catch (error) {
       console.error(error);
       message.error('账号或密码错误!');
@@ -26,7 +26,7 @@ function LoginPage() {
     <Wrapper>
       <Form layout="vertical" onFinish={onLogin}>
         <Form.Item label="用户名" name="username" rules={[{ required: true }]}>
-          <Input  allowClear />
+          <Input allowClear />
         </Form.Item>
         <Form.Item label="密码" name="password" rules={[{ required: true }]}>
           <Input.Password allowClear />

@@ -9,7 +9,7 @@ function RequireAuth({ children }) {
 
   const location = useLocation();
 
-  if (!authState.status && authState.user.username === 'admin') {
+  if (!authState.status || authState.user?.username !== 'admin') {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 

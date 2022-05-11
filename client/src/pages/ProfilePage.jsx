@@ -20,7 +20,7 @@ function ProfilePage() {
     const values = formInstance.getFieldsValue(true);
     try {
       await authAPI.update(authState.user.id, values);
-      await fetchCurrentUser();
+      await fetchCurrentUser(false);
       message.success('修改成功');
       setAction('view');
     } catch (error) {

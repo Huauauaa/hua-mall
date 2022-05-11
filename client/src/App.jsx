@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import AuthContext from './contexts/AuthContext';
@@ -20,18 +20,23 @@ import UserPage from './pages/user/UserPage';
 import authAPI from './apis/auth.api';
 
 function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [authState, setAuthState] = useState({
     status: Boolean(localStorage.getItem('accessToken')),
     user: null,
   });
 
-  const fetchCurrentUser = async () => {
+  const fetchCurrentUser = async (redirect = true) => {
     try {
       const response = await authAPI.getCurrentUser();
       if (!response) {
         throw new Error(response);
       }
       setAuthState({ status: true, user: response });
+      if (redirect) {
+        navigate(location.pathname);
+      }
     } catch (error) {
       console.error(error);
       setAuthState({ status: false, user: null });
