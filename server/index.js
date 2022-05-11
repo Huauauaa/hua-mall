@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const bcrypt = require('bcrypt');
 const PREFIX = '/api';
 const port = 3000;
 app.use(express.json());
@@ -18,7 +19,12 @@ routers.forEach((item) => {
   app.use(`${PREFIX}${item.path}`, item.file);
 });
 
-db.sequelize.sync().then(() => {
+db.sequelize.sync().then(async () => {
+  const adminUser = await db.User.findOne({ where: { username: 'admin' } });
+  if (!adminUser) {
+    const password = await bcrypt.hash('admin', 10);
+    await db.User.create({ username: 'admin', password });
+  }
   app.listen(port, () => {
     console.info(`Example app listening on port ${port}`);
   });

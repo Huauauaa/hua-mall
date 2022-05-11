@@ -81,7 +81,12 @@ function UserPage() {
       width: 160,
       render: (row) => (
         <Space>
-          <Button danger type="link" onClick={() => onDelete(row.id)}>
+          <Button
+            danger
+            type="link"
+            onClick={() => onDelete(row.id)}
+            disabled={row.username === 'admin'}
+          >
             删除
           </Button>
           <a onClick={() => openFormDialog(row)}>编辑</a>
