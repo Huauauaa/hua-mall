@@ -1,23 +1,26 @@
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import AuthContext from '../contexts/AuthContext';
-import PropTypes from 'prop-types';
 import { useContext } from 'react';
+import CommonLayout from './CommonLayout';
 
-function RequireAuth({ children }) {
+function RequireAuth({ adminRequired = false }) {
   const { authState } = useContext(AuthContext);
 
   const location = useLocation();
 
-  if (!authState.status || authState.user?.username !== 'admin') {
+  if (
+    !authState.status ||
+    (adminRequired && authState.user?.username !== 'admin')
+  ) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
-  return children;
+  return (
+    <CommonLayout>
+      <Outlet />
+    </CommonLayout>
+  );
 }
-
-RequireAuth.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default RequireAuth;

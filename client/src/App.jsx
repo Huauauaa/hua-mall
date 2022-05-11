@@ -62,35 +62,21 @@ function App() {
         <Route path="/" element={<CommonLayout />}>
           <Route index element={<HomePage />} />
           <Route path="product/:id" element={<ProductDetail />} />
+        </Route>
+
+        <Route path="/" element={<RequireAuth />}>
           <Route path="profile" element={<ProfilePage />} />
           <Route path="cart" element={<CartPage />} />
           <Route path="order" element={<OrderPage />} />
           <Route path="updatePassword" element={<UpdatePasswordPage />} />
-          <Route
-            path="/product"
-            element={
-              <RequireAuth>
-                <ProductPage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/category"
-            element={
-              <RequireAuth>
-                <CategoryPage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/user"
-            element={
-              <RequireAuth>
-                <UserPage />
-              </RequireAuth>
-            }
-          />
         </Route>
+
+        <Route path="/" element={<RequireAuth adminRequired />}>
+          <Route path="/product" element={<ProductPage />} />
+          <Route path="/category" element={<CategoryPage />} />
+          <Route path="/user" element={<UserPage />} />
+        </Route>
+
         <Route path="/" element={<RareLayout />}>
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
